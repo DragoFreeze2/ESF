@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirecting...</title>
     <script>
-        // Automatically redirects lowercase /esf paths to uppercase /ESF 
-        // while preserving subdirectories, query parameters, and URL hashes.
+        // Automatically redirects lowercase /esf paths to uppercase /ESF on GitHub Pages
+        // Preserves subdirectories, query parameters, and URL hashes
         const currentPath = window.location.pathname;
         const currentSearch = window.location.search;
         const currentHash = window.location.hash;
 
-        if (currentPath.includes('/esf')) {
-            const correctedPath = currentPath.replace(/\/esf(\/|$)/g, '/ESF$1');
+        // Check if path contains lowercase /esf and hasn't already been corrected
+        if (/\/esf(\/|$)/.test(currentPath)) {
+            const correctedPath = currentPath.replace(/\/esf/g, '/ESF');
             window.location.replace(correctedPath + currentSearch + currentHash);
         }
     </script>
@@ -21,4 +22,3 @@
     <p>Page moved. Redirecting...</p>
 </body>
 </html>
- 
