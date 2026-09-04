@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta name="description" content="Ember Smoke & Flavor: wood-fired, slow-smoked whole chicken in Erbil, Kurdistan. Original BBQ, Ember White, and Ember Heat sauces, served with signature red vegetable rice and Ember smoked vegetables.">
+<meta name="description" content="Ember Smoke & Flavor: wood-fired, slow-smoked whole chicken in Erbil, Kurdistan. Original BBQ, Ember White, and Ember Heat sauces, served with signature red veget[...]
 <style>
   :root {
     --steel: #14110e;
@@ -188,6 +188,13 @@
     flex-shrink: 0;
     background: var(--cream-dim);
     border: 1px solid var(--cream-dim);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .item-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(184, 69, 31, 0.2);
   }
 
   .item-info {
@@ -251,6 +258,89 @@
   [data-lang] { display: none; }
   [data-lang].active { display: block; }
   span[data-lang].active { display: inline; }
+
+  /* ===== LIGHTBOX MODAL ===== */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(20, 17, 14, 0.95);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .lightbox-overlay.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: zoomIn 0.3s ease;
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 6px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: var(--gold);
+    color: var(--steel);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    background: var(--cream);
+  }
+
+  @media (max-width: 600px) {
+    .lightbox-close {
+      top: 10px;
+      background: var(--gold);
+    }
+
+    .lightbox-image {
+      max-width: 95vw;
+      max-height: 80vh;
+    }
+  }
 </style>
 </head>
 <body dir="ltr" data-current-lang="en">
@@ -276,7 +366,7 @@
 
   <div class="intro">
     <p data-lang="en" class="active">Our chicken comes in three flavors. Choose one flavor for your whole meal, or mix flavors by piece.</p>
-    <p data-lang="ku">مریشکەکانمان بە سێ چیژی جیاواز دێت: یەک لە تامەکان هەڵبژێرە وەکو خواردنێک، یان بە تێکەڵی پارچە جیاوازەکان داوا بکە.</p>
+    <p data-lang="ku">مریشکەکانمان بە سێ چیژی جیاواز دێت: یەک لە تامەکان هەڵبژێرە وەکو خواردنێک، یان بە تێکەڵی پارچە [...]
     <p data-lang="ar">يأتي دجاجنا بثلاث نكهات. اختر نكهة واحدة لوجبتك كاملة، أو امزج النكهات حسب القطعة.</p>
   </div>
 
@@ -301,8 +391,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Our signature smoky-sweet BBQ glaze. Rich, tangy, and finished with a subtle touch of tamarind.</span>
-          <span data-lang="ku">سۆسی باربیکیوی تایبەتی خۆمان، بە تامی دووکەڵ و شیرین. دەوڵەمەند و ترشیەکی سووکی تەمەرهندی هەیە.</span>
-          <span data-lang="ar">صلصة باربكيو الخاصة بنا بنكهة مدخنة وحلوة، غنية ومتوازنة بلمسة حامضة خفيفة من التمر الهندي.</span>
+          <span data-lang="ku">سۆسی باربیکیوی تایبەتی خۆمان، بە تامی دووکەڵ و شیرین. دەوڵەمەند و ترشیەکی سووکی تەمەرهندی[...]
+          <span data-lang="ar">صلصة باربكيو الخاصة بنا بنكهة مدخنة وحلوة، غنية ومتوازنة بلمسة حامضة خفيفة من التمر الهند[...]
         </div>
       </div>
     </div>
@@ -318,8 +408,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">American-inspired. Our creamy, tangy signature sauce with a bold, peppery finish. Cool, rich, and perfectly balanced with our smoked chicken.</span>
-          <span data-lang="ku">وەرگیراوە لە تامە ئەمریکییەکان. سۆسی تایبەتی خۆمانە، کرێمی و ترشیەکی کەم، بە کۆتایییەکی توند و پڕ لە تامی بیبەری. سارد و دەوڵەمەندە و بە تەواوی لەگەڵ مریشکی دووکەڵکراوەکەمان هاوسەنگە.</span>
-          <span data-lang="ar">مستوحاة من النكهات الأمريكية. صلصتنا الخاصة الكريمية والحامضة بلمسة فلفلية جريئة. غنية ومنعشة ومتوازنة تمامًا مع دجاجنا المدخن.</span>
+          <span data-lang="ku">وەرگیراوە لە تامە ئەمریکییەکان. سۆسی تایبەتی خۆمانە، کرێمی و ترشیەکی کەم، بە کۆتایییەکی ت[...]
+          <span data-lang="ar">مستوحاة من النكهات الأمريكية. صلصتنا الخاصة الكريمية والحامضة بلمسة فلفلية جريئة. غنية وم[...]
         </div>
       </div>
     </div>
@@ -335,8 +425,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">African-inspired. Freshly made with real vegetables and chilies. Bold heat, bright finish.</span>
-          <span data-lang="ku">وەرگیراوە لە تامە ئەفریقییەکان. بە تازەیی لە سەوزە و بیبەری فرێش ئامادە دەکرێت. تونیەکی بەهێز و کۆتایییەکی بەچیژو تازە.</span>
-          <span data-lang="ar">مستوحاة من النكهات الأفريقية. محضّرة طازجة من الخضروات والفلفل الحقيقي. حرارة جريئة ولمسة منعشة.</span>
+          <span data-lang="ku">وەرگیراوە لە تامە ئەفریقییەکان. بە تازەیی لە سەوزە و بیبەری فرێش ئامادە دەکرێت. تونیەکی بە[...]
+          <span data-lang="ar">مستوحاة من النكهات الأفريقية. محضّرة طازجة من الخضروات والفلفل الحقيقي. حرارة جريئة ولمسة[...]
         </div>
       </div>
     </div>
@@ -365,8 +455,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Whole smoked chicken served with signature red vegetable rice, white rice, Ember smoked vegetables, and two pieces of Iraqi bread.</span>
-          <span data-lang="ku">یەک دانە مریشکی تەواوی دووکەڵکراو، لەگەڵ برنجی سووری بە سەوزەی تایبەتی خۆمان، وبرنجی سپی، سەوزەی دووکەڵکراوەکانمان، و دوو نانی عێراقی.</span>
-          <span data-lang="ar">دجاجة كاملة مدخنة تُقدّم مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات المدخنة، وقطعتين من الخبز العراقي.</span>
+          <span data-lang="ku">یەک دانە مریشکی تەواوی دووکەڵکراو، لەگەڵ برنجی سووری بە سەوزەی تایبەتی خۆمان، وبرنجی سپی�[...]
+          <span data-lang="ar">دجاجة كاملة مدخنة تُقدّم مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات المدخ[...]
         </div>
       </div>
     </div>
@@ -383,9 +473,9 @@
           <div class="item-price">12,250 – 14,250</div>
         </div>
         <div class="item-desc">
-          <span data-lang="en" class="active">One thigh and one breast, served with signature red vegetable rice, white rice, Ember smoked vegetables, and Iraqi bread. Price depends on sauce.</span>
-          <span data-lang="ku">یەک ڕان و یەک سنگ، لەگەڵ برنجی سوور بە سەوزەی تایبەتی خۆمان، وبرنجی سپی، سەوزەی دووکەڵکراوەکانمان، و یەک نانی عێراقی.</span>
-          <span data-lang="ar">فخذ واحد وصدر واحد، يُقدّمان مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات المدخنة، والخبز العراقي.</span>
+          <span data-lang="en" class="active">One thigh and one breast, served with signature red vegetable rice, white rice, Ember smoked vegetables, and Iraqi bread. Price depends on sauce.</sp[...]
+          <span data-lang="ku">یەک ڕان و یەک سنگ، لەگەڵ برنجی سوور بە سەوزەی تایبەتی خۆمان، وبرنجی سپی، سەوزەی دووکەڵکرا�[...]
+          <span data-lang="ar">فخذ واحد وصدر واحد، يُقدّمان مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات ا�[...]
         </div>
       </div>
     </div>
@@ -403,8 +493,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Smoked thigh, served with signature red vegetable rice, white rice, and Ember smoked vegetables. Price depends on sauce.</span>
-          <span data-lang="ku">پارچەیەک هەڵبژێرە، ڕانی دووکەڵکراو یان سنگی دووکەڵکراو. لەگەڵ برنجی سوور بە سەوزەی تایبەتی خۆمان ،و برنجی سپی، و سەوزە دووکەڵکراوەکانمان دەخرێتە پێش.</span>
-          <span data-lang="ar">اختر قطعتك، فخذ مدخن أو صدر مدخن. تُقدّم مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات المدخنة.</span>
+          <span data-lang="ku">پارچەیەک هەڵبژێرە، ڕانی دووکەڵکراو یان سنگی دووکەڵکراو. لەگەڵ برنجی سوور بە سەوزەی تایبە�[...]
+          <span data-lang="ar">اختر قطعتك، فخذ مدخن أو صدر مدخن. تُقدّم مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، و[...]
         </div>
       </div>
     </div>
@@ -421,7 +511,7 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Smoked breast, served with signature red vegetable rice, white rice, and Ember smoked vegetables. Price depends on sauce.</span>
-          <span data-lang="ku">سنگی دووکەڵکراو، لەگەڵ برنجی سوور بە سەوزەی تایبەتی خۆمان، وبرنجی سپی، و سەوزە دووکەڵکراوەکانمان.</span>
+          <span data-lang="ku">سنگی دووکەڵکراو، لەگەڵ برنجی سوور بە سەوزەی تایبەتی خۆمان، وبرنجی سپی، و سەوزە دووکەڵکرا�[...]
           <span data-lang="ar">صدر مدخن، يُقدّم مع أرزنا الأحمر الخاص بالخضروات، والأرز الأبيض، والخضروات المدخنة.</span>
         </div>
       </div>
@@ -450,8 +540,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Our signature smoked red vegetable rice, made with fresh vegetables and infused with deep, natural smoke for a rich and delicious flavor.</span>
-          <span data-lang="ku">برنجی سووری تایبەتی و دووکەڵکراوی خۆمان، کە بە سەوزەی تازە دروست کراوە و بە تامی دووکەڵی سروشتی و قووڵ تێکەڵ کراوە، بۆ تامێکی دەوڵەمەند و خۆش.</span>
-          <span data-lang="ar">أرزنا الأحمر الخاص المدخن، محضّر من الخضروات الطازجة ومشبّع بنكهة دخان طبيعية وعميقة تمنحه مذاقًا غنيًا وشهيًا.</span>
+          <span data-lang="ku">برنجی سووری تایبەتی و دووکەڵکراوی خۆمان، کە بە سەوزەی تازە دروست کراوە و بە تامی دووکەڵی س[...]
+          <span data-lang="ar">أرزنا الأحمر الخاص المدخن، محضّر من الخضروات الطازجة ومشبّع بنكهة دخان طبيعية وعميقة تمن�[...]
         </div>
       </div>
     </div>
@@ -469,8 +559,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Fresh vegetables smoked over real wood, bringing deep, vibrant smoke into every bite. Tomato, potato, corn, carrot.</span>
-          <span data-lang="ku">سەوزەی تازە کە بە داری سورشتی دووکەڵ کراوە، بۆ ئەوەی لە هەر پارویەکدا تامێکی قووڵ و زیندووی دووکەڵ هەست پێبکرێت. تەماتە، پەتاتە، گەنمە شامی، گیزەر.</span>
-          <span data-lang="ar">خضروات طازجة مدخّنة على الحطب، لتمنح كل لقمة نكهة دخان غنية ونابضة. طماطم، بطاطا، ذرة، جزر.</span>
+          <span data-lang="ku">سەوزەی تازە کە بە داری سورشتی دووکەڵ کراوە، بۆ ئەوەی لە هەر پارویەکدا تامێکی قووڵ و زیندوو[...]
+          <span data-lang="ar">خضروات طازجة مدخّنة على الحطب، لتمنح كل لقمة نكهة دخان غنية ونابضة. طماطم، بطاطا، ذرة، جزر[...]
         </div>
       </div>
     </div>
@@ -487,8 +577,8 @@
         </div>
         <div class="item-desc">
           <span data-lang="en" class="active">Our signature potatoes, slow-smoked over real wood and finished with butter to bring out their rich, vibrant smoky flavor.</span>
-          <span data-lang="ku">پەتاتە تایبەتەکەمان، بە هێواشی لەسەرئاگری دارو دووکەڵ بە کەرەوە ئامادە دەکری، بۆ ئەوەی تامی دەوڵەمەند و زیندووی دووکەڵ زیاتر دەربکەوێت.</span>
-          <span data-lang="ar">بطاطانا الخاصة، مدخّنة ببطء على الحطب وممزوجة بالزبدة لإبراز نكهة الدخان الغنية والنابضة.</span>
+          <span data-lang="ku">پەتاتە تایبەتەکەمان، بە هێواشی لەسەرئاگری دارو دووکەڵ بە کەرەوە ئامادە دەکری، بۆ ئەوەی ت�[...]
+          <span data-lang="ar">بطاطانا الخاصة، مدخّنة ببطء على الحطب وممزوجة بالزبدة لإبراز نكهة الدخان الغنية والنابضة[...]
         </div>
       </div>
     </div>
@@ -521,6 +611,14 @@
   <p data-lang="ar">أربيل، كردستان</p>
 </footer>
 
+<!-- LIGHTBOX MODAL -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightbox-close">&times;</button>
+    <img class="lightbox-image" id="lightbox-image" src="" alt="">
+  </div>
+</div>
+
 <script>
 (function() {
   var buttons = document.querySelectorAll('.lang-btn');
@@ -547,6 +645,40 @@
     btn.addEventListener('click', function() {
       setLang(btn.getAttribute('data-select-lang'));
     });
+  });
+
+  // ===== LIGHTBOX FUNCTIONALITY =====
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImage = document.getElementById('lightbox-image');
+  var lightboxClose = document.getElementById('lightbox-close');
+  var photos = document.querySelectorAll('.item-photo');
+
+  photos.forEach(function(photo) {
+    photo.addEventListener('click', function() {
+      lightboxImage.src = this.src;
+      lightboxImage.alt = this.alt;
+      lightbox.classList.add('active');
+      body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    body.style.overflow = 'auto';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // Close on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
   });
 })();
 </script>
