@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Automatically redirects lowercase /esf paths to uppercase /ESF 
+        // while preserving subdirectories, query parameters, and URL hashes.
+        const currentPath = window.location.pathname;
+        const currentSearch = window.location.search;
+        const currentHash = window.location.hash;
+
+        if (currentPath.includes('/esf')) {
+            const correctedPath = currentPath.replace(/\/esf(\/|$)/g, '/ESF$1');
+            window.location.replace(correctedPath + currentSearch + currentHash);
+        }
+    </script>
+</head>
+<body>
+    <p>Page moved. Redirecting...</p>
+</body>
+</html>
+ 
